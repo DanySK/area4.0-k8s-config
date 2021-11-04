@@ -8,4 +8,5 @@ sudo /usr/share/clr-k8s-examples/setup_system.sh
 sudo systemctl stop docker
 sudo systemctl stop containerd
 sudo swupd bundle-add git
+sudo mkdir -p /etc/containers/
 sudo curl -sL -o /etc/containers/policy.json $GH_RAW/$REPO/$REF/etc/containers/policy.json
