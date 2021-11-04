@@ -22,4 +22,8 @@ sudo sysctl --system
 sudo systemctl mask $(sed -n -e 's#^/dev/\([0-9a-z]*\).*#dev-\1.swap#p' /proc/swaps) 2>/dev/null
 sudo swapoff -a
 
+echo "127.0.0.1 localhost `hostname`" | sudo tee --append /etc/hosts
+sudo systemctl enable kubelet.service
 
+sudo systemctl enable --now crio.service
+sudo kubeadm join 137.204.107.229:6443 --token $MASTER_TOKEN --discovery-token-ca-cert-hash $DISCOVERY_TOKEN
