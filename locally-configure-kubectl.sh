@@ -1,13 +1,20 @@
 #! /bin/sh
 
+# should be provided by an admin (which can extract it via `sh extract-server.sh`)
 SERVER_URL=$1
-CA_FILE=$2
+
+# should be provided by an admin (which can extract it via `sh extract-ca.sh`)
+CA_FILE_PATH=$2
+
+# totally custom username (no need to make it equal to the username used within the cluster)
 USER_NAME=$3
+
+# should be provided by an admin (which can be extracted via `sh extract-token.sh`)
 USER_TOKEN=$4
 
 CLUSTER_NAME=${5:-kubernetes}
 
-kubectl config set-cluster $CLUSTER_NAME --server=$SERVER_URL --certificate-authority=$USER_TOKEN
+kubectl config set-cluster $CLUSTER_NAME --server=$SERVER_URL --certificate-authority=$CA_FILE_PATH
 kubectl config set-credentials $USER_NAME --token=$USER_TOKEN
 CONTEXT_NAME="$USER_NAME@$CLUSTER_NAME"
 kubectl config set-context $CONTEXT_NAME --cluster $CLUSTER_NAME --user $USER_NAME
